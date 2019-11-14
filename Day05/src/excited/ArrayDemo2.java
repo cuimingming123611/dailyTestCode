@@ -1,8 +1,5 @@
 package excited;
 
-import java.lang.reflect.Array;
-import java.util.Arrays;
-
 /**
  * @Author: MingmingCui
  * @Description:
@@ -11,7 +8,7 @@ import java.util.Arrays;
 public class ArrayDemo2 {
     public static void main(String args[]) {
         int[] arr = new int[10];
-
+        //方法一：
         for (int i = 0; i < arr.length; i++) {
             arr[i] = (int)(Math.random()*30+1);
             boolean isFlag = false;
@@ -21,11 +18,11 @@ public class ArrayDemo2 {
                         isFlag = true;
                         break;
                     }
-                }
-                if (isFlag){
-                    arr[i] = (int)(Math.random()*30+1);
-                    isFlag = false;
-                    continue;
+                    if (isFlag){
+                        arr[i] = (int)(Math.random()*30+1);
+                        isFlag = false;
+                        continue;
+                    }
                 }
                 break;
             }
