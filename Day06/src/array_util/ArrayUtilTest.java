@@ -1,3 +1,5 @@
+package array_util;
+
 /**
  * @Author: MingmingCui
  * @Description:  数据工具测试类

@@ -1,3 +1,5 @@
+package array_util;
+
 /**
  * @Author: MingmingCui
  * @Description: 整合数组的方法：
