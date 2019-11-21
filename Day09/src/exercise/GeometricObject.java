@@ -8,6 +8,7 @@ package exercise;
 public class GeometricObject {
     protected String color;
     protected double weight;
+    
 
     public GeometricObject() {
         this.color = "white";
