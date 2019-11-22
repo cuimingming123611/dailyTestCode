@@ -22,7 +22,7 @@ public class Score {
             int score = scanner.nextInt();
             if (score == -1){
                 return;
-            }else if (score<0 && score>100){
+            }else if (score<0 || score>100){
                 System.out.println("请输入正确的分数：");
                 continue;
             }
@@ -32,21 +32,6 @@ public class Score {
             }
         }
         //遍历数组
-       /*String level;
-        for (int i = 0; i <vector.size() ; i++) {
-            Object object = vector.elementAt(i);
-            int score = (int)object;
-            if (maxScore - score <=10){
-                level = "A";
-            }else if (maxScore - score <=20){
-                level = "B";
-            }else if (maxScore - score <=30){
-                level = "C";
-            }else {
-                level = "D";
-            }
-            System.out.println("student-"+i+" score is " + score + ",level is " + level);
-        }*/
 
     }
 }
