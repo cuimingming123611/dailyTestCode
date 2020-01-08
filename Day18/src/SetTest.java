@@ -80,7 +80,5 @@ public class SetTest {
         while (iterator.hasNext()){
             System.out.println(iterator.next());
         }
-
-
     }
 }
