@@ -5,11 +5,9 @@ import org.junit.Test;
 import util.JDBCUtil;
 
 import java.io.InputStream;
+import java.lang.reflect.Field;
 import java.math.BigDecimal;
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.sql.*;
 
 /**
  * @author: CuiMingming
@@ -53,5 +51,66 @@ public class CustomerForQuery {
 
 
     }
+
+    public Customer queryForCustomer(String sql,Object ...args) {
+        /** 
+         * @description: 针对customer表的通用查询操作
+          * @param  
+         * @return: void 
+         * @author: CuiMingming
+         * @date: 2020-01-09 09:11
+         */
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        try {
+            connection = JDBCUtil.getConnection();
+
+            preparedStatement = connection.prepareStatement(sql);
+
+            for (int i = 0;i<args.length;i++){
+                 preparedStatement.setObject(i+1, args[i]);
+            }
+
+            resultSet = preparedStatement.executeQuery();
+
+            //获取结果集的元数据
+            ResultSetMetaData metaData = resultSet.getMetaData();
+
+            //通过元数据获得结果集中的列数
+            int columnCount = metaData.getColumnCount();
+            if (resultSet.next()){
+                //造一个customer对象
+                Customer customer = new Customer();
+                for (int i = 0;i<columnCount;i++){
+                    //获得每列的value
+                    Object columnValue = resultSet.getObject(i + 1);
+
+                    //获取每个列的列名
+                    String columnName = metaData.getColumnName(i + 1);
+
+                    //给customer对象指定的某个属性，赋值为value:通过反射
+                    Field field = Customer.class.getDeclaredField(columnName);
+                    field.setAccessible(true);
+                    field.set(customer, columnValue);
+                }
+                return customer;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            JDBCUtil.closeResource(connection, preparedStatement,resultSet);
+        }
+        return null;
+    }
+
+
+    @Test
+    public void testQueryForCustomer(){
+        String sql="select id , name ,email,birth from customers where id = ?";
+        Customer customer = queryForCustomer(sql, 2);
+        System.out.println(customer);
+    }
+
 
 }
